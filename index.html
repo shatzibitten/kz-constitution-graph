@@ -972,12 +972,372 @@
                 display: block;
             }
         }
+        
+        /* ============================================
+           WELCOME MODAL & ONBOARDING
+           ============================================ */
+        
+        .welcome-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+        
+        .welcome-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .welcome-modal {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 20px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+        }
+        
+        .welcome-header {
+            padding: 30px 30px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .welcome-header h2 {
+            font-size: 24px;
+            font-weight: 600;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        
+        .welcome-header p {
+            color: #888;
+            font-size: 14px;
+        }
+        
+        .welcome-body {
+            padding: 25px 30px;
+        }
+        
+        .disclaimer-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 25px;
+            max-height: 180px;
+            overflow-y: auto;
+        }
+        
+        .disclaimer-box p {
+            font-size: 12px;
+            color: #aaa;
+            line-height: 1.7;
+            text-align: justify;
+        }
+        
+        .disclaimer-box::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        .disclaimer-box::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .disclaimer-box::-webkit-scrollbar-thumb {
+            background: rgba(102, 126, 234, 0.3);
+            border-radius: 2px;
+        }
+        
+        .welcome-instructions {
+            margin-bottom: 25px;
+        }
+        
+        .welcome-instructions h4 {
+            font-size: 13px;
+            color: #667eea;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+        
+        .instruction-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        
+        .instruction-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(102, 126, 234, 0.15);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        
+        .instruction-text {
+            font-size: 13px;
+            color: #ccc;
+            line-height: 1.5;
+            padding-top: 5px;
+        }
+        
+        .welcome-footer {
+            padding: 20px 30px 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .dont-show-again {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        
+        .dont-show-again input {
+            width: 18px;
+            height: 18px;
+            accent-color: #667eea;
+        }
+        
+        .dont-show-again span {
+            font-size: 13px;
+            color: #888;
+        }
+        
+        .welcome-btn {
+            width: 100%;
+            padding: 14px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .welcome-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        /* Updated Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header-content {
+            flex: 1;
+        }
+        
+        .header .subtitle {
+            color: #667eea;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+        
+        .about-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(102, 126, 234, 0.2);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            color: #667eea;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            margin-left: 20px;
+        }
+        
+        .about-btn:hover {
+            background: rgba(102, 126, 234, 0.4);
+            transform: scale(1.05);
+        }
+        
+        /* Graph Hint */
+        .graph-hint {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            pointer-events: none;
+            z-index: 10;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+        
+        .graph-hint.hidden {
+            opacity: 0;
+        }
+        
+        .graph-hint p {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 8px;
+        }
+        
+        .graph-hint .arrow {
+            font-size: 24px;
+            color: rgba(102, 126, 234, 0.6);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(10px); }
+            60% { transform: translateY(5px); }
+        }
+        
+        /* Page Footer */
+        .page-footer {
+            position: fixed;
+            bottom: 0;
+            left: 380px;
+            right: 0;
+            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            backdrop-filter: blur(10px);
+            z-index: 50;
+        }
+        
+        .page-footer p {
+            font-size: 11px;
+            color: #666;
+        }
+        
+        .page-footer .about-link {
+            font-size: 11px;
+            color: #667eea;
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        
+        .page-footer .about-link:hover {
+            color: #8b9cf7;
+        }
+        
+        /* Mobile adjustments for new elements */
+        @media (max-width: 900px) {
+            .welcome-modal {
+                max-width: 100%;
+                max-height: 85vh;
+                margin: 10px;
+            }
+            
+            .welcome-header {
+                padding: 20px 20px 15px;
+            }
+            
+            .welcome-header h2 {
+                font-size: 20px;
+            }
+            
+            .welcome-body {
+                padding: 20px;
+            }
+            
+            .disclaimer-box {
+                max-height: 150px;
+            }
+            
+            .welcome-footer {
+                padding: 15px 20px 25px;
+            }
+            
+            .page-footer {
+                left: 0;
+                bottom: 65px;
+                padding: 8px 15px;
+            }
+            
+            .page-footer p {
+                font-size: 10px;
+            }
+            
+            .graph-hint p {
+                font-size: 14px;
+            }
+            
+            .about-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .welcome-header h2 {
+                font-size: 18px;
+            }
+            
+            .disclaimer-box {
+                max-height: 120px;
+                padding: 14px;
+            }
+            
+            .disclaimer-box p {
+                font-size: 11px;
+            }
+            
+            .instruction-item {
+                gap: 10px;
+            }
+            
+            .instruction-icon {
+                width: 28px;
+                height: 28px;
+                font-size: 14px;
+            }
+            
+            .instruction-text {
+                font-size: 12px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>🗺️ Карта конституционных конфликтов</h1>
-        <p>Инженерный анализ: коллизии, рычаги и охладители в проекте Конституции</p>
+        <div class="header-content">
+            <p class="subtitle">Проект Конституции Республики Казахстан</p>
+            <h1>🗺️ Карта конституционных конфликтов</h1>
+            <p>Инженерный анализ: коллизии, рычаги и охладители</p>
+        </div>
+        <button class="about-btn" id="about-btn" title="О проекте">?</button>
     </div>
     
     <div class="container">
@@ -1278,6 +1638,10 @@
         <div class="graph-container">
             <svg id="graph"></svg>
             <div class="tooltip" id="tooltip"></div>
+            <div class="graph-hint" id="graph-hint">
+                <p>Нажмите на любой узел<br>для изучения связей</p>
+                <div class="arrow">↓</div>
+            </div>
             <div class="controls">
                 <button class="control-btn" id="zoom-in" title="Приблизить">+</button>
                 <button class="control-btn" id="zoom-out" title="Отдалить">−</button>
@@ -1306,6 +1670,49 @@
             </button>
         </div>
     </nav>
+    
+    <!-- Page Footer -->
+    <footer class="page-footer">
+        <p>Независимый образовательный проект для правового просвещения</p>
+        <button class="about-link" id="footer-about-link">О проекте</button>
+    </footer>
+    
+    <!-- Welcome Modal -->
+    <div class="welcome-overlay" id="welcome-overlay">
+        <div class="welcome-modal">
+            <div class="welcome-header">
+                <h2>Карта конституционных конфликтов</h2>
+                <p>Проект Конституции Республики Казахстан</p>
+            </div>
+            <div class="welcome-body">
+                <div class="disclaimer-box">
+                    <p>Данный проект представляет собой независимую личную инициативу, созданную с единственной целью — объективного анализа и широкого обсуждения новой Конституции Республики Казахстан. Автор стремится внести свой вклад в правовое просвещение граждан, руководствуясь исключительно патриотическими мотивами и уважением к Основному закону страны. Все публикуемые материалы основаны на открытых официальных данных, подаются в нейтральной, непредвзятой форме и строго соответствуют законодательству Республики Казахстан. Проект не преследует политических целей, не связан с какой-либо организацией и не содержит призывов к противоправным действиям. Напротив, он направлен на укрепление правовой культуры и общественного диалога в духе уважения к государственной целостности и конституционному порядку.</p>
+                </div>
+                <div class="welcome-instructions">
+                    <h4>Как пользоваться</h4>
+                    <div class="instruction-item">
+                        <div class="instruction-icon">👆</div>
+                        <div class="instruction-text">Нажмите на узел — увидите связанные статьи и их взаимодействие</div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="instruction-icon">✋</div>
+                        <div class="instruction-text">Перетаскивайте граф для навигации, масштабируйте колёсиком или жестами</div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="instruction-icon">📋</div>
+                        <div class="instruction-text">Откройте панель «Ключевые выводы» для текстового анализа конфликтов</div>
+                    </div>
+                </div>
+            </div>
+            <div class="welcome-footer">
+                <label class="dont-show-again">
+                    <input type="checkbox" id="dont-show-checkbox">
+                    <span>Больше не показывать</span>
+                </label>
+                <button class="welcome-btn" id="welcome-start-btn">Начать изучение</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         // Graph data based on the constitutional conflict map
@@ -2028,6 +2435,102 @@
             simulation.force("center", d3.forceCenter(newWidth / 2, newHeight / 2));
             simulation.alpha(0.3).restart();
         });
+        
+        // ============================================
+        // WELCOME MODAL & ONBOARDING
+        // ============================================
+        
+        const welcomeOverlay = document.getElementById("welcome-overlay");
+        const welcomeStartBtn = document.getElementById("welcome-start-btn");
+        const dontShowCheckbox = document.getElementById("dont-show-checkbox");
+        const aboutBtn = document.getElementById("about-btn");
+        const footerAboutLink = document.getElementById("footer-about-link");
+        const graphHint = document.getElementById("graph-hint");
+        
+        const STORAGE_KEY = "kz-constitution-hide-welcome";
+        
+        // Check if should show welcome modal
+        function shouldShowWelcome() {
+            try {
+                return localStorage.getItem(STORAGE_KEY) !== "true";
+            } catch (e) {
+                return true; // Show by default if localStorage unavailable
+            }
+        }
+        
+        // Show welcome modal
+        function showWelcome() {
+            welcomeOverlay.classList.remove("hidden");
+        }
+        
+        // Hide welcome modal
+        function hideWelcome() {
+            welcomeOverlay.classList.add("hidden");
+            
+            // Save preference if checkbox is checked
+            if (dontShowCheckbox.checked) {
+                try {
+                    localStorage.setItem(STORAGE_KEY, "true");
+                } catch (e) {
+                    console.log("localStorage not available");
+                }
+            }
+        }
+        
+        // Hide graph hint
+        function hideGraphHint() {
+            graphHint.classList.add("hidden");
+        }
+        
+        // Initialize welcome modal
+        if (shouldShowWelcome()) {
+            showWelcome();
+        } else {
+            welcomeOverlay.classList.add("hidden");
+        }
+        
+        // Event listeners
+        welcomeStartBtn.addEventListener("click", hideWelcome);
+        
+        aboutBtn.addEventListener("click", () => {
+            dontShowCheckbox.checked = false; // Reset checkbox when opening manually
+            showWelcome();
+        });
+        
+        footerAboutLink.addEventListener("click", () => {
+            dontShowCheckbox.checked = false;
+            showWelcome();
+        });
+        
+        // Close modal on overlay click (outside modal)
+        welcomeOverlay.addEventListener("click", (e) => {
+            if (e.target === welcomeOverlay) {
+                hideWelcome();
+            }
+        });
+        
+        // Close modal on Escape key
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && !welcomeOverlay.classList.contains("hidden")) {
+                hideWelcome();
+            }
+        });
+        
+        // Hide graph hint on first interaction
+        let hintHidden = false;
+        
+        function hideHintOnInteraction() {
+            if (!hintHidden) {
+                hideGraphHint();
+                hintHidden = true;
+            }
+        }
+        
+        // Listen for graph interactions to hide hint
+        svg.on("click.hint", hideHintOnInteraction);
+        svg.on("touchstart.hint", hideHintOnInteraction);
+        node.on("click.hint", hideHintOnInteraction);
+        node.on("touchstart.hint", hideHintOnInteraction);
     </script>
 </body>
 </html>
