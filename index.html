@@ -2616,12 +2616,24 @@
                     }
                 },
                 {
-                    element: isMobile ? '#mobile-highlights-tab' : '#highlights-toggle',
+                    element: isMobile ? '#mobile-highlights-tab' : '#highlights-panel',
                     popover: {
                         title: 'Текстовый анализ',
-                        description: 'Откройте панель «Ключевые выводы» для подробного текстового разбора конфликтов, рычагов и рекомендаций.',
+                        description: 'Здесь вы найдёте подробный текстовый разбор конфликтов, рычагов и рекомендаций. Нажмите на карточку — связанные узлы подсветятся на графе.',
                         side: isMobile ? 'top' : 'left',
                         align: 'center'
+                    },
+                    onHighlightStarted: () => {
+                        // Open the highlights panel so user can see it
+                        if (!isMobile) {
+                            highlightsPanel.classList.add('open');
+                        }
+                    },
+                    onDeselected: () => {
+                        // Close panel when moving to next step
+                        if (!isMobile) {
+                            highlightsPanel.classList.remove('open');
+                        }
                     }
                 },
                 {
