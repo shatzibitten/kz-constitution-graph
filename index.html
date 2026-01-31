@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Карта конфликтов: Проект Конституции</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.js.iife.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.css"/>
     <style>
         * {
             margin: 0;
@@ -1063,42 +1065,68 @@
             border-radius: 2px;
         }
         
-        .welcome-instructions {
-            margin-bottom: 25px;
+        .tour-preview {
+            text-align: center;
+            padding: 20px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            border: 1px dashed rgba(102, 126, 234, 0.3);
         }
         
-        .welcome-instructions h4 {
-            font-size: 13px;
-            color: #667eea;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
+        .tour-preview p {
+            font-size: 14px;
+            color: #aaa;
         }
         
-        .instruction-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: 12px;
+        /* Driver.js customization for dark theme */
+        .driver-popover {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%) !important;
+            border: 1px solid rgba(102, 126, 234, 0.4) !important;
+            color: #e0e0e0 !important;
         }
         
-        .instruction-icon {
-            width: 32px;
-            height: 32px;
-            background: rgba(102, 126, 234, 0.15);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            flex-shrink: 0;
+        .driver-popover-title {
+            color: #667eea !important;
+            font-size: 16px !important;
         }
         
-        .instruction-text {
-            font-size: 13px;
-            color: #ccc;
-            line-height: 1.5;
-            padding-top: 5px;
+        .driver-popover-description {
+            color: #ccc !important;
+            font-size: 14px !important;
+        }
+        
+        .driver-popover-progress-text {
+            color: #888 !important;
+        }
+        
+        .driver-popover-prev-btn,
+        .driver-popover-next-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 8px !important;
+            padding: 8px 16px !important;
+            font-weight: 500 !important;
+        }
+        
+        .driver-popover-prev-btn:hover,
+        .driver-popover-next-btn:hover {
+            opacity: 0.9 !important;
+        }
+        
+        .driver-popover-close-btn {
+            color: #888 !important;
+        }
+        
+        .driver-popover-close-btn:hover {
+            color: #fff !important;
+        }
+        
+        .driver-popover-arrow-side-left.driver-popover-arrow,
+        .driver-popover-arrow-side-right.driver-popover-arrow,
+        .driver-popover-arrow-side-top.driver-popover-arrow,
+        .driver-popover-arrow-side-bottom.driver-popover-arrow {
+            border-color: rgba(102, 126, 234, 0.4) !important;
         }
         
         .welcome-footer {
@@ -1660,7 +1688,7 @@
                 <span class="mobile-nav-tab-icon">🗺️</span>
                 <span>Граф</span>
             </button>
-            <button class="mobile-nav-tab" data-view="highlights">
+            <button class="mobile-nav-tab" data-view="highlights" id="mobile-highlights-tab">
                 <span class="mobile-nav-tab-icon">📋</span>
                 <span>Выводы</span>
             </button>
@@ -1688,20 +1716,8 @@
                 <div class="disclaimer-box">
                     <p>Данный проект представляет собой независимую личную инициативу, созданную с единственной целью — объективного анализа и широкого обсуждения новой Конституции Республики Казахстан. Автор стремится внести свой вклад в правовое просвещение граждан, руководствуясь исключительно патриотическими мотивами и уважением к Основному закону страны. Все публикуемые материалы основаны на открытых официальных данных, подаются в нейтральной, непредвзятой форме и строго соответствуют законодательству Республики Казахстан. Проект не преследует политических целей, не связан с какой-либо организацией и не содержит призывов к противоправным действиям. Напротив, он направлен на укрепление правовой культуры и общественного диалога в духе уважения к государственной целостности и конституционному порядку.</p>
                 </div>
-                <div class="welcome-instructions">
-                    <h4>Как пользоваться</h4>
-                    <div class="instruction-item">
-                        <div class="instruction-icon">👆</div>
-                        <div class="instruction-text">Нажмите на узел — увидите связанные статьи и их взаимодействие</div>
-                    </div>
-                    <div class="instruction-item">
-                        <div class="instruction-icon">✋</div>
-                        <div class="instruction-text">Перетаскивайте граф для навигации, масштабируйте колёсиком или жестами</div>
-                    </div>
-                    <div class="instruction-item">
-                        <div class="instruction-icon">📋</div>
-                        <div class="instruction-text">Откройте панель «Ключевые выводы» для текстового анализа конфликтов</div>
-                    </div>
+                <div class="tour-preview">
+                    <p>После нажатия кнопки мы покажем вам интерактивный тур по интерфейсу</p>
                 </div>
             </div>
             <div class="welcome-footer">
@@ -1709,7 +1725,7 @@
                     <input type="checkbox" id="dont-show-checkbox">
                     <span>Больше не показывать</span>
                 </label>
-                <button class="welcome-btn" id="welcome-start-btn">Начать изучение</button>
+                <button class="welcome-btn" id="welcome-start-btn">Начать интерактивный тур</button>
             </div>
         </div>
     </div>
@@ -2531,6 +2547,93 @@
         svg.on("touchstart.hint", hideHintOnInteraction);
         node.on("click.hint", hideHintOnInteraction);
         node.on("touchstart.hint", hideHintOnInteraction);
+        
+        // ============================================
+        // INTERACTIVE TOUR (driver.js)
+        // ============================================
+        
+        const driverObj = window.driver.js.driver;
+        
+        function startTour() {
+            // Hide graph hint before tour starts
+            hideHintOnInteraction();
+            
+            // Determine if mobile
+            const isMobile = window.innerWidth <= 900;
+            
+            // Get the first visible node for targeting
+            const firstNode = document.querySelector('.node');
+            
+            const tourSteps = [
+                {
+                    element: firstNode || '#graph',
+                    popover: {
+                        title: 'Узлы графа',
+                        description: 'Нажмите на любой узел — увидите связанные статьи и их взаимодействие. Выбранные узлы подсветятся, остальные затемнятся.',
+                        side: 'bottom',
+                        align: 'center'
+                    }
+                },
+                {
+                    element: '#graph',
+                    popover: {
+                        title: 'Навигация по графу',
+                        description: isMobile 
+                            ? 'Перетаскивайте граф пальцем для навигации. Используйте два пальца для масштабирования.' 
+                            : 'Перетаскивайте граф мышью для навигации. Используйте колёсико для масштабирования.',
+                        side: 'top',
+                        align: 'center'
+                    }
+                },
+                {
+                    element: isMobile ? '#mobile-highlights-tab' : '#highlights-toggle',
+                    popover: {
+                        title: 'Текстовый анализ',
+                        description: 'Откройте панель «Ключевые выводы» для подробного текстового разбора конфликтов, рычагов и рекомендаций.',
+                        side: isMobile ? 'top' : 'left',
+                        align: 'center'
+                    }
+                },
+                {
+                    element: '#about-btn',
+                    popover: {
+                        title: 'Справка',
+                        description: 'Нажмите эту кнопку, чтобы снова увидеть информацию о проекте и запустить тур.',
+                        side: 'bottom',
+                        align: 'end'
+                    }
+                }
+            ];
+            
+            const tour = driverObj({
+                showProgress: true,
+                progressText: '{{current}} из {{total}}',
+                nextBtnText: 'Далее',
+                prevBtnText: 'Назад',
+                doneBtnText: 'Готово',
+                steps: tourSteps,
+                onDestroyed: () => {
+                    // Tour completed
+                    console.log('Tour completed');
+                }
+            });
+            
+            // Small delay to ensure modal is fully hidden
+            setTimeout(() => {
+                tour.drive();
+            }, 300);
+        }
+        
+        // Track if tour should start after modal closes
+        let shouldStartTour = false;
+        
+        // Override welcome start button to also trigger tour
+        welcomeStartBtn.removeEventListener("click", hideWelcome);
+        welcomeStartBtn.addEventListener("click", () => {
+            shouldStartTour = true;
+            hideWelcome();
+            startTour();
+        });
     </script>
 </body>
 </html>
