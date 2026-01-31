@@ -2564,14 +2564,40 @@
             // Get the first visible node for targeting
             const firstNode = document.querySelector('.node');
             
+            // Create tour with interactive first step
+            let tour;
+            
             const tourSteps = [
                 {
                     element: firstNode || '#graph',
                     popover: {
-                        title: 'Узлы графа',
-                        description: 'Нажмите на любой узел — увидите связанные статьи и их взаимодействие. Выбранные узлы подсветятся, остальные затемнятся.',
+                        title: 'Шаг 1: Нажмите на узел',
+                        description: 'Попробуйте нажать на этот узел прямо сейчас! Или нажмите "Далее" чтобы увидеть результат.',
                         side: 'bottom',
-                        align: 'center'
+                        align: 'center',
+                        onNextClick: () => {
+                            // Simulate click on the node to show the effect
+                            if (firstNode) {
+                                const nodeData = d3.select(firstNode).datum();
+                                if (nodeData) {
+                                    handleNodeClick({ stopPropagation: () => {}, preventDefault: () => {} }, nodeData);
+                                }
+                            }
+                            tour.moveNext();
+                        }
+                    }
+                },
+                {
+                    element: '.graph-container',
+                    popover: {
+                        title: 'Результат: связи видны!',
+                        description: 'Теперь вы видите все связанные статьи — они подсвечены, остальные затемнены. Нажмите на пустое место графа, чтобы сбросить.',
+                        side: 'left',
+                        align: 'center',
+                        onPrevClick: () => {
+                            clearHighlights();
+                            tour.movePrevious();
+                        }
                     }
                 },
                 {
@@ -2582,7 +2608,11 @@
                             ? 'Перетаскивайте граф пальцем для навигации. Используйте два пальца для масштабирования.' 
                             : 'Перетаскивайте граф мышью для навигации. Используйте колёсико для масштабирования.',
                         side: 'top',
-                        align: 'center'
+                        align: 'center',
+                        onPrevClick: () => {
+                            clearHighlights();
+                            tour.movePrevious();
+                        }
                     }
                 },
                 {
@@ -2605,7 +2635,7 @@
                 }
             ];
             
-            const tour = driverObj({
+            tour = driverObj({
                 showProgress: true,
                 progressText: '{{current}} из {{total}}',
                 nextBtnText: 'Далее',
@@ -2613,8 +2643,8 @@
                 doneBtnText: 'Готово',
                 steps: tourSteps,
                 onDestroyed: () => {
-                    // Tour completed
-                    console.log('Tour completed');
+                    // Clear highlights when tour ends
+                    clearHighlights();
                 }
             });
             
