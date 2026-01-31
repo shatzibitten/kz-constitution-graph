@@ -755,16 +755,7 @@
             }
             
             .page-footer {
-                position: fixed;
-                top: 0;
-                bottom: auto;
-                left: 0;
-                right: 0;
-                border-top: none;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-                z-index: 100;
-                padding: 8px 15px;
-                background: rgba(0, 0, 0, 0.9);
+                display: none;
             }
             
             .header h1 {
@@ -776,8 +767,14 @@
             }
             
             .container {
-                height: calc(100vh - 50px - 65px);
-                margin-top: 50px;
+                height: calc(100vh - 65px);
+                margin-top: 0;
+            }
+            
+            .mobile-nav-tab-help {
+                flex: 0 0 auto;
+                width: 50px;
+                padding: 12px;
             }
             
             .sidebar {
@@ -1707,6 +1704,9 @@
                 <span class="mobile-nav-tab-icon">ℹ️</span>
                 <span>Легенда</span>
             </button>
+            <button class="mobile-nav-tab mobile-nav-tab-help" id="mobile-help-btn">
+                <span class="mobile-nav-tab-icon">❓</span>
+            </button>
         </div>
     </nav>
     
@@ -2549,6 +2549,15 @@
             startTour();
         });
         
+        // Mobile help button
+        const mobileHelpBtn = document.getElementById("mobile-help-btn");
+        if (mobileHelpBtn) {
+            mobileHelpBtn.addEventListener("click", () => {
+                dontShowCheckbox.checked = false;
+                showWelcome();
+            });
+        }
+        
         // Mobile about button
         const mobileAboutBtn = document.getElementById("mobile-about-btn");
         if (mobileAboutBtn) {
@@ -2682,7 +2691,7 @@
                     }
                 },
                 {
-                    element: isMobile ? '#mobile-about-btn' : '.footer-buttons',
+                    element: isMobile ? '#mobile-help-btn' : '.footer-buttons',
                     popover: {
                         title: 'Справка',
                         description: isMobile 
