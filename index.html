@@ -1189,26 +1189,6 @@
             margin-bottom: 4px;
         }
         
-        .about-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(102, 126, 234, 0.2);
-            border: 1px solid rgba(102, 126, 234, 0.3);
-            color: #667eea;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            flex-shrink: 0;
-            margin-left: 20px;
-        }
-        
-        .about-btn:hover {
-            background: rgba(102, 126, 234, 0.4);
-            transform: scale(1.05);
-        }
-        
         /* Graph Hint */
         .graph-hint {
             position: absolute;
@@ -1266,17 +1246,39 @@
             color: #666;
         }
         
-        .page-footer .about-link {
-            font-size: 11px;
-            color: #667eea;
-            background: none;
-            border: none;
-            cursor: pointer;
-            text-decoration: underline;
+        .footer-buttons {
+            display: flex;
+            gap: 10px;
         }
         
-        .page-footer .about-link:hover {
-            color: #8b9cf7;
+        .footer-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            font-size: 12px;
+            color: #ccc;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .footer-btn:hover {
+            background: rgba(102, 126, 234, 0.2);
+            border-color: rgba(102, 126, 234, 0.4);
+            color: #fff;
+        }
+        
+        .footer-btn-tour {
+            background: rgba(102, 126, 234, 0.15);
+            border-color: rgba(102, 126, 234, 0.3);
+            color: #667eea;
+        }
+        
+        .footer-btn-tour:hover {
+            background: rgba(102, 126, 234, 0.3);
         }
         
         /* Mobile adjustments for new elements */
@@ -1321,10 +1323,13 @@
                 font-size: 14px;
             }
             
-            .about-btn {
-                width: 36px;
-                height: 36px;
-                font-size: 16px;
+            .footer-buttons {
+                gap: 8px;
+            }
+            
+            .footer-btn {
+                padding: 6px 10px;
+                font-size: 11px;
             }
         }
         
@@ -1365,7 +1370,6 @@
             <h1>🗺️ Карта конституционных конфликтов</h1>
             <p>Инженерный анализ: коллизии, рычаги и охладители</p>
         </div>
-        <button class="about-btn" id="about-btn" title="О проекте">?</button>
     </div>
     
     <div class="container">
@@ -1702,7 +1706,14 @@
     <!-- Page Footer -->
     <footer class="page-footer">
         <p>Независимый образовательный проект для правового просвещения</p>
-        <button class="about-link" id="footer-about-link">О проекте</button>
+        <div class="footer-buttons">
+            <button class="footer-btn" id="footer-about-link">
+                <span>ℹ️</span> О проекте
+            </button>
+            <button class="footer-btn footer-btn-tour" id="footer-tour-btn">
+                <span>🎯</span> Пройти тур
+            </button>
+        </div>
     </footer>
     
     <!-- Welcome Modal -->
@@ -2459,8 +2470,8 @@
         const welcomeOverlay = document.getElementById("welcome-overlay");
         const welcomeStartBtn = document.getElementById("welcome-start-btn");
         const dontShowCheckbox = document.getElementById("dont-show-checkbox");
-        const aboutBtn = document.getElementById("about-btn");
         const footerAboutLink = document.getElementById("footer-about-link");
+        const footerTourBtn = document.getElementById("footer-tour-btn");
         const graphHint = document.getElementById("graph-hint");
         
         const STORAGE_KEY = "kz-constitution-hide-welcome";
@@ -2508,14 +2519,13 @@
         // Event listeners
         welcomeStartBtn.addEventListener("click", hideWelcome);
         
-        aboutBtn.addEventListener("click", () => {
-            dontShowCheckbox.checked = false; // Reset checkbox when opening manually
-            showWelcome();
-        });
-        
         footerAboutLink.addEventListener("click", () => {
             dontShowCheckbox.checked = false;
             showWelcome();
+        });
+        
+        footerTourBtn.addEventListener("click", () => {
+            startTour();
         });
         
         // Close modal on overlay click (outside modal)
@@ -2637,12 +2647,12 @@
                     }
                 },
                 {
-                    element: '#about-btn',
+                    element: '.footer-buttons',
                     popover: {
-                        title: 'Справка',
-                        description: 'Нажмите эту кнопку, чтобы снова увидеть информацию о проекте и запустить тур.',
-                        side: 'bottom',
-                        align: 'end'
+                        title: 'Справка и тур',
+                        description: 'Здесь вы можете прочитать о проекте или снова пройти этот тур.',
+                        side: 'top',
+                        align: 'center'
                     }
                 }
             ];
