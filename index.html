@@ -172,6 +172,11 @@
             display: flex;
             gap: 10px;
             z-index: 50;
+            pointer-events: none;
+        }
+        
+        .control-btn {
+            pointer-events: auto;
         }
         
         .control-btn {
@@ -750,6 +755,7 @@
             }
             
             .page-footer {
+                position: fixed;
                 top: 0;
                 bottom: auto;
                 left: 0;
@@ -758,6 +764,7 @@
                 border-bottom: 1px solid rgba(255, 255, 255, 0.1);
                 z-index: 100;
                 padding: 8px 15px;
+                background: rgba(0, 0, 0, 0.9);
             }
             
             .header h1 {
