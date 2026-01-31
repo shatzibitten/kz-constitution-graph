@@ -2358,6 +2358,8 @@
                 const isPeripheral = d3.select(this).classed("peripheral");
                 d3.select(this).classed("visible", isPeripheral);
             });
+            // Hide tooltip (especially important for mobile)
+            tooltip.style("opacity", 0);
         }
         
         // Click on graph background to clear highlights
