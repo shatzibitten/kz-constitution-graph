@@ -877,10 +877,15 @@
                 font-size: 10px;
             }
             
-            /* Better tooltip for mobile */
+            /* Better tooltip for mobile - fixed at bottom */
             .tooltip {
-                max-width: 280px;
+                max-width: calc(100vw - 40px);
                 font-size: 12px;
+                left: 50% !important;
+                top: auto !important;
+                bottom: 80px;
+                transform: translateX(-50%);
+                position: fixed;
             }
         }
         
@@ -1652,8 +1657,10 @@
                 .duration(200)
                 .attr("r", 22);
         })
-        .on("click", function(event, d) {
+        // Node click/tap handler function
+        function handleNodeClick(event, d) {
             event.stopPropagation();
+            if (event.preventDefault) event.preventDefault();
             
             // Find all connected nodes (direct neighbors)
             const connectedIds = new Set([d.id]);
@@ -1689,6 +1696,43 @@
                 // Show/hide label
                 d3.select(linkLabelItems.nodes()[i]).classed("visible", isRelated);
             });
+            
+            // Show tooltip on mobile
+            if ('ontouchstart' in window) {
+                tooltip.style("opacity", 1)
+                    .html(`<h5>${d.fullLabel}</h5><p>${d.description}</p>`)
+                    .style("left", "50%")
+                    .style("top", "auto")
+                    .style("bottom", "80px")
+                    .style("transform", "translateX(-50%)");
+            }
+        }
+        
+        node.on("click", handleNodeClick);
+        
+        // Touch support for nodes
+        let touchTimeout;
+        let touchMoved = false;
+        
+        node.on("touchstart", function(event, d) {
+            touchMoved = false;
+            touchTimeout = setTimeout(() => {
+                // Long press - show tooltip
+                if (!touchMoved) {
+                    handleNodeClick(event, d);
+                }
+            }, 200);
+        }, { passive: false })
+        .on("touchmove", function() {
+            touchMoved = true;
+            clearTimeout(touchTimeout);
+        })
+        .on("touchend", function(event, d) {
+            clearTimeout(touchTimeout);
+            if (!touchMoved) {
+                event.preventDefault();
+                handleNodeClick(event, d);
+            }
         });
         
         // Simulation tick
